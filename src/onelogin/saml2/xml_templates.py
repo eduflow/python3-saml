@@ -31,6 +31,7 @@ class OneLogin_Saml2_Templates(object):
   AssertionConsumerServiceURL="%(assertion_url)s"%(attr_consuming_service_str)s>
     <saml:Issuer>%(entity_id)s</saml:Issuer>%(nameid_policy_str)s
 %(requested_authn_context_str)s
+%(scoping_str)s
 </samlp:AuthnRequest>"""
 
     LOGOUT_REQUEST = """\
