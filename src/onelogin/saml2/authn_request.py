@@ -113,6 +113,18 @@ class OneLogin_Saml2_Authn_Request(object):
         if 'attributeConsumingService' in sp_data and sp_data['attributeConsumingService']:
             attr_consuming_service_str = "\n    AttributeConsumingServiceIndex=\"1\""
 
+        scoping_str = ''
+        if 'scopingIdpList' in sp_data:
+            scoping_idp_str = ''
+            for idp in sp_data['scopingIdpList']:
+                scoping_idp_str += '            <samlp:IDPEntry ProviderID="%s" />' % idp
+            scoping_str = '''\
+    <samlp:Scoping>
+        <samlp:IDPList>
+            %s
+        </samlp:IDPList>
+    </samlp:Scoping>''' % scoping_idp_str
+
         request = OneLogin_Saml2_Templates.AUTHN_REQUEST % \
             {
                 'id': uid,
@@ -126,6 +138,7 @@ class OneLogin_Saml2_Authn_Request(object):
                 'subject_str': subject_str,
                 'nameid_policy_str': nameid_policy_str,
                 'requested_authn_context_str': requested_authn_context_str,
+                'scoping_str': scoping_str,
                 'attr_consuming_service_str': attr_consuming_service_str,
             }
 
