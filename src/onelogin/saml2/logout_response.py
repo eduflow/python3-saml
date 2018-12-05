@@ -9,7 +9,6 @@ Logout Response class of OneLogin's Python Toolkit.
 
 """
 
-from onelogin.saml2 import compat
 from onelogin.saml2.utils import OneLogin_Saml2_Utils, OneLogin_Saml2_ValidationError
 from onelogin.saml2.xml_templates import OneLogin_Saml2_Templates
 from onelogin.saml2.xml_utils import OneLogin_Saml2_XML
@@ -38,7 +37,7 @@ class OneLogin_Saml2_Logout_Response(object):
         self.id = None
 
         if response is not None:
-            self.__logout_response = compat.to_string(OneLogin_Saml2_Utils.decode_base64_and_inflate(response, ignore_zip=True))
+            self.__logout_response = OneLogin_Saml2_Utils.decode_base64_and_inflate(response, ignore_zip=True)
             self.document = OneLogin_Saml2_XML.to_etree(self.__logout_response)
             self.id = self.document.get('ID', None)
 
